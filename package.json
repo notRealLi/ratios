@@ -4,14 +4,15 @@
   "description": "react project",
   "main": "server.js",
   "scripts": {
-    "start": "concurrently \"npm run server \" \"npm run client\"",
+    "start": "npm i && npm run deploy",
+    "deploy": "concurrently \"npm run server \" \"npm run client\"",
     "server": "cd back && npm i && node server",
     "client": "cd front && npm run build",
     "dev": "concurrently \"cd back && nodemon server\" \"cd front && npm start\""
   },
   "author": "",
   "license": "ISC",
-  "devDependencies": {
+  "dependencies": {
     "concurrently": "^5.2.0"
   }
 }
