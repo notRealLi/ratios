@@ -4,9 +4,9 @@
   "description": "react project",
   "main": "server.js",
   "scripts": {
-    "start": "npm run server && cd .. && npm run client",
+    "start": "concurrently \"npm run server \" \"npm run client\"",
     "server": "cd back && npm i && node server",
-    "client": "cd front && npm i && npm start",
+    "client": "cd front && npm run build",
     "dev": "concurrently \"cd back && nodemon server\" \"cd front && npm start\""
   },
   "author": "",
