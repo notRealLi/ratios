@@ -4,11 +4,12 @@
   "description": "react project",
   "main": "server.js",
   "scripts": {
-    "start": "cd front && npm i && npm run build && cd ../back && npm i && npm run start",
+    "start": "cd back && npm i && npm run start",
     "deploy": "concurrently \"npm run server \" \"npm run client\"",
     "server": "cd back && npm i && node server",
     "client": "cd front && npm i && npm run build",
-    "dev": "concurrently \"cd back && nodemon server\" \"cd front && npm start\""
+    "dev": "concurrently \"cd back && nodemon server\" \"cd front && npm start\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix front && npm run build --prefix front"
   },
   "author": "",
   "license": "ISC",
