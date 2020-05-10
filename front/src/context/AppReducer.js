@@ -1,5 +1,13 @@
 export default (state, action) => {
   switch (action.type) {
+    case "SEARCH_SYMBOL":
+      console.log("hi");
+      console.log(action.payload);
+      return {
+        ...state,
+        loading: false,
+        suggestions: action.payload,
+      };
     case "GET_TRANSACTIONS":
       return {
         ...state,

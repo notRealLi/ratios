@@ -4,6 +4,7 @@ import axios from "axios";
 
 const initialState = {
   transactions: [],
+  suggestions: [],
   error: null,
   loading: true,
 };
@@ -14,6 +15,26 @@ export const GlobalProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
 
   // actions
+  async function searchSymbol(text) {
+    try {
+      let payload = [];
+      if (text != "") {
+        const res = await axios.get(
+          `https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${text}&apikey=W52VB1BHI4STUX4G`
+        );
+        if (res.data.bestMatches)
+          payload = res.data.bestMatches.map((item) => item["1. symbol"]);
+      }
+
+      dispatch({
+        type: "SEARCH_SYMBOL",
+        payload,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   async function getTransactions() {
     try {
       const res = await axios.get("/api/v1/transactions");
@@ -71,9 +92,11 @@ export const GlobalProvider = ({ children }) => {
   return (
     <GlobalContext.Provider
       value={{
+        suggestions: state.suggestions,
         transactions: state.transactions,
         loading: state.loading,
         error: state.error,
+        searchSymbol,
         getTransactions,
         dispatch,
         deleteTransaction,
