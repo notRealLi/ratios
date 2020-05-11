@@ -1,8 +1,6 @@
 export default (state, action) => {
   switch (action.type) {
     case "SEARCH_SYMBOL":
-      console.log("hi");
-      console.log(action.payload);
       return {
         ...state,
         loading: false,

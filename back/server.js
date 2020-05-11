@@ -12,6 +12,7 @@ dotenv.config({
 connectDB();
 
 const transactionRoutes = require("./routes/transactionRoutes");
+const stockRoutes = require("./routes/stockRoutes");
 
 const PORT = process.env.PORT || 5000;
 
@@ -24,6 +25,7 @@ if (process.env.NODE_ENV === "development") {
 }
 
 app.use("/api/v1/transactions", transactionRoutes);
+app.use("/api/v1/stocks", stockRoutes);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("../front/build"));

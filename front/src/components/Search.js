@@ -4,7 +4,6 @@ import "./Search.css";
 
 const Search = () => {
   const { suggestions, searchSymbol } = useContext(GlobalContext);
-
   const [text, setText] = useState("");
 
   const onChange = (e) => {
@@ -13,8 +12,6 @@ const Search = () => {
 
     searchSymbol(input);
   };
-
-  console.log(suggestions);
 
   return (
     <>

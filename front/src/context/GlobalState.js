@@ -18,10 +18,13 @@ export const GlobalProvider = ({ children }) => {
   async function searchSymbol(text) {
     try {
       let payload = [];
+      text = text.trim();
+
       if (text != "") {
         const res = await axios.get(
           `https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${text}&apikey=W52VB1BHI4STUX4G`
         );
+
         if (res.data.bestMatches)
           payload = res.data.bestMatches.map((item) => item["1. symbol"]);
       }
@@ -31,7 +34,10 @@ export const GlobalProvider = ({ children }) => {
         payload,
       });
     } catch (error) {
-      console.log(error);
+      dispatch({
+        type: "STOCK_ERROR",
+        payload: error.response.data.error,
+      });
     }
   }
 
