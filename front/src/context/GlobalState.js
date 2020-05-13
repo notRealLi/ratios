@@ -26,7 +26,10 @@ export const GlobalProvider = ({ children }) => {
         );
 
         if (res.data.bestMatches)
-          payload = res.data.bestMatches.map((item) => item["1. symbol"]);
+          payload = res.data.bestMatches.map((item) => ({
+            value: item["1. symbol"],
+            label: item["1. symbol"],
+          }));
       }
 
       dispatch({
