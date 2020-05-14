@@ -1,7 +1,6 @@
 import React, { useState, useContext } from "react";
 import Select, { components } from "react-select";
 import { GlobalContext } from "../context/GlobalState";
-import "./Search.css";
 
 const Search = () => {
   const { suggestions, searchSymbol } = useContext(GlobalContext);

@@ -17,12 +17,14 @@ export const GlobalProvider = ({ children }) => {
   // actions
   async function searchSymbol(text) {
     try {
+      const res = await axios.get("/api/v1/stocks/keys");
+      const key = res.data.data[Math.floor(Math.random(res.data.size))];
       let payload = [];
       text = text.trim();
 
       if (text != "") {
         const res = await axios.get(
-          `https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${text}&apikey=W52VB1BHI4STUX4G`
+          `https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${text}&apikey=${key}`
         );
 
         if (res.data.bestMatches)
@@ -39,7 +41,7 @@ export const GlobalProvider = ({ children }) => {
     } catch (error) {
       dispatch({
         type: "STOCK_ERROR",
-        payload: error.response.data.error,
+        payload: error,
       });
     }
   }
