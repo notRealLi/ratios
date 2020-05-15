@@ -3,7 +3,9 @@ import Select, { components } from "react-select";
 import { GlobalContext } from "../context/GlobalState";
 
 const Search = () => {
-  const { suggestions, searchSymbol } = useContext(GlobalContext);
+  const { suggestions, searchSymbol, searchDataset } = useContext(
+    GlobalContext
+  );
   const [stock, setStock] = useState("");
   const [text, setText] = useState("");
 
@@ -21,6 +23,7 @@ const Search = () => {
         onInputChange={onInputChange}
         onChange={(e) => {
           setStock(e.value);
+          searchDataset(e.value);
           setText("");
         }}
         components={{

@@ -1,5 +1,11 @@
 export default (state, action) => {
   switch (action.type) {
+    case "SEARCH_DATASET":
+      return {
+        ...state,
+        loading: false,
+        datasetForChart: action.payload,
+      };
     case "SEARCH_SYMBOL":
       return {
         ...state,

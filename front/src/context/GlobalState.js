@@ -3,6 +3,7 @@ import AppReducer from "./AppReducer";
 import axios from "axios";
 
 const initialState = {
+  datasetForChart: null,
   transactions: [],
   suggestions: [],
   error: null,
@@ -39,6 +40,41 @@ export const GlobalProvider = ({ children }) => {
         payload,
       });
     } catch (error) {
+      dispatch({
+        type: "STOCK_ERROR",
+        payload: error,
+      });
+    }
+  }
+
+  async function searchDataset(text) {
+    try {
+      const res = await axios.get("/api/v1/stocks/keys");
+      const key = res.data.data[Math.floor(Math.random(res.data.size))];
+      let payload = null;
+      text = text.trim();
+      console.log("to search");
+
+      if (text != "") {
+        console.log("searching");
+        const res = await axios.get(
+          `https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY&symbol=${text}&apikey=${key}`
+        );
+        console.log(res);
+        const x = Object.keys(res.data["Weekly Time Series"]);
+        const y = Object.values(res.data["Weekly Time Series"]).map(
+          (item) => item["1. open"]
+        );
+        payload = { x, y };
+        console.log(res.data["Meta Data"]);
+      }
+
+      dispatch({
+        type: "SEARCH_DATASET",
+        payload,
+      });
+    } catch (error) {
+      console.log(error);
       dispatch({
         type: "STOCK_ERROR",
         payload: error,
@@ -103,11 +139,13 @@ export const GlobalProvider = ({ children }) => {
   return (
     <GlobalContext.Provider
       value={{
+        datasetForChart: state.datasetForChart,
         suggestions: state.suggestions,
         transactions: state.transactions,
         loading: state.loading,
         error: state.error,
         searchSymbol,
+        searchDataset,
         getTransactions,
         dispatch,
         deleteTransaction,
