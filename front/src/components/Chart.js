@@ -21,11 +21,11 @@ const Chart = () => {
     };
   else {
     data = {
-      labels: selectedStock.x.slice(0, 11),
+      labels: selectedStock.x.slice(0, 11).reverse(),
       datasets: [
         {
           label: "Price",
-          data: selectedStock.y.slice(0, 11),
+          data: selectedStock.y.slice(0, 11).reverse(),
           fill: false,
           borderColor: "rgba(75, 192, 192, 1)",
         },
