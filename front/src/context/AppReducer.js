@@ -4,7 +4,7 @@ export default (state, action) => {
       return {
         ...state,
         loading: false,
-        datasetForChart: action.payload,
+        selectedStock: action.payload,
       };
     case "SEARCH_SYMBOL":
       return {

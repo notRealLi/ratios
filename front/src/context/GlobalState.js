@@ -3,7 +3,7 @@ import AppReducer from "./AppReducer";
 import axios from "axios";
 
 const initialState = {
-  datasetForChart: null,
+  selectedStock: null,
   transactions: [],
   suggestions: [],
   error: null,
@@ -30,7 +30,7 @@ export const GlobalProvider = ({ children }) => {
 
         if (res.data.bestMatches)
           payload = res.data.bestMatches.map((item) => ({
-            value: item["1. symbol"],
+            value: item,
             label: item["1. symbol"],
           }));
       }
@@ -47,12 +47,12 @@ export const GlobalProvider = ({ children }) => {
     }
   }
 
-  async function searchDataset(text) {
+  async function searchDataset(stock) {
     try {
       const res = await axios.get("/api/v1/stocks/keys");
       const key = res.data.data[Math.floor(Math.random(res.data.size))];
       let payload = null;
-      text = text.trim();
+      const text = stock["1. symbol"].trim();
       console.log("to search");
 
       if (text != "") {
@@ -61,12 +61,13 @@ export const GlobalProvider = ({ children }) => {
           `https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY&symbol=${text}&apikey=${key}`
         );
         console.log(res);
-        const x = Object.keys(res.data["Weekly Time Series"]);
-        const y = Object.values(res.data["Weekly Time Series"]).map(
+
+        stock.x = Object.keys(res.data["Weekly Time Series"]);
+        stock.y = Object.values(res.data["Weekly Time Series"]).map(
           (item) => item["1. open"]
         );
-        payload = { x, y };
-        console.log(res.data["Meta Data"]);
+        payload = stock;
+        console.log(res.data);
       }
 
       dispatch({
@@ -139,7 +140,7 @@ export const GlobalProvider = ({ children }) => {
   return (
     <GlobalContext.Provider
       value={{
-        datasetForChart: state.datasetForChart,
+        selectedStock: state.selectedStock,
         suggestions: state.suggestions,
         transactions: state.transactions,
         loading: state.loading,

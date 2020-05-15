@@ -6,26 +6,27 @@ const Search = () => {
   const { suggestions, searchSymbol, searchDataset } = useContext(
     GlobalContext
   );
-  const [stock, setStock] = useState("");
+  const [stock, setStock] = useState(null);
   const [text, setText] = useState("");
 
   const onInputChange = (input) => {
-    setText(input);
     searchSymbol(input);
+  };
+
+  const onChange = (selection) => {
+    setStock(selection.value);
+    searchDataset(selection.value);
+    setText("");
   };
 
   return (
     <>
       <h3>Search for a stock</h3>
-      {stock}
       <Select
+        value={text}
         noOptionsMessage={() => "Type to search symbols"}
         onInputChange={onInputChange}
-        onChange={(e) => {
-          setStock(e.value);
-          searchDataset(e.value);
-          setText("");
-        }}
+        onChange={onChange}
         components={{
           DropdownIndicator: () => null,
           IndicatorSeparator: () => null,

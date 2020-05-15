@@ -1,12 +1,13 @@
 import React, { useContext } from "react";
+import Header from "./Header";
 import { Line } from "react-chartjs-2";
 import { GlobalContext } from "../context/GlobalState";
 
 const Chart = () => {
-  const { datasetForChart } = useContext(GlobalContext);
+  const { selectedStock } = useContext(GlobalContext);
   let data = {};
 
-  if (!datasetForChart)
+  if (!selectedStock)
     data = {
       labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
       datasets: [
@@ -20,11 +21,11 @@ const Chart = () => {
     };
   else {
     data = {
-      labels: datasetForChart.x.slice(0, 11),
+      labels: selectedStock.x.slice(0, 11),
       datasets: [
         {
           label: "Price",
-          data: datasetForChart.y.slice(0, 11),
+          data: selectedStock.y.slice(0, 11),
           fill: false,
           borderColor: "rgba(75, 192, 192, 1)",
         },
@@ -32,10 +33,15 @@ const Chart = () => {
     };
   }
 
-  console.log(datasetForChart);
+  console.log(selectedStock);
 
   return (
     <>
+      <Header
+        title={`Time series${
+          selectedStock ? ` - ${selectedStock["2. name"]}` : ""
+        }`}
+      />
       <Line
         data={data}
         options={{
