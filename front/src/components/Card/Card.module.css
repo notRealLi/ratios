@@ -1,0 +1,30 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  padding: 50px 0;
+  width: 50%;
+  max-height: 40vh;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  margin: 0 2% !important;
+  width: auto !important;
+  padding: 2%;
+  justify-content: center;
+  align-items: center;
+}
+
+.typography {
+  text-align: center;
+}
+
+.up {
+  border-bottom: 10px solid #2ecc71 !important;
+}
+
+.down {
+  border-bottom: 10px solid #c0392b !important;
+}

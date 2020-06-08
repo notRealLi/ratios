@@ -18,18 +18,23 @@ export const GlobalProvider = ({ children }) => {
   // actions
   async function searchSymbol(text) {
     try {
-      const res = await axios.get("/api/v1/stocks/keys");
-      const key = res.data.data[Math.floor(Math.random(res.data.size))];
+      // fetch an api key
+      const {
+        data: { data, size },
+      } = await axios.get("/api/v1/stocks/keys");
+      const key = data[Math.floor(Math.random(size))];
       let payload = [];
       text = text.trim();
 
-      if (text != "") {
-        const res = await axios.get(
+      if (text !== "") {
+        const {
+          data: { bestMatches },
+        } = await axios.get(
           `https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${text}&apikey=${key}`
         );
 
-        if (res.data.bestMatches)
-          payload = res.data.bestMatches.map((item) => ({
+        if (bestMatches)
+          payload = bestMatches.map((item) => ({
             value: item,
             label: item["1. symbol"],
           }));
@@ -49,25 +54,25 @@ export const GlobalProvider = ({ children }) => {
 
   async function searchDataset(stock) {
     try {
-      const res = await axios.get("/api/v1/stocks/keys");
-      const key = res.data.data[Math.floor(Math.random(res.data.size))];
+      const {
+        data: { data, size },
+      } = await axios.get("/api/v1/stocks/keys");
+      const key = data[Math.floor(Math.random(size))];
       let payload = null;
       const text = stock["1. symbol"].trim();
       console.log("to search");
 
-      if (text != "") {
+      if (text !== "") {
         console.log("searching");
-        const res = await axios.get(
+        const { data } = await axios.get(
           `https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY&symbol=${text}&apikey=${key}`
         );
-        console.log(res);
 
-        stock.x = Object.keys(res.data["Weekly Time Series"]);
-        stock.y = Object.values(res.data["Weekly Time Series"]).map(
+        stock.x = Object.keys(data["Weekly Time Series"]);
+        stock.y = Object.values(data["Weekly Time Series"]).map(
           (item) => item["1. open"]
         );
         payload = stock;
-        console.log(res.data);
       }
 
       dispatch({
@@ -85,11 +90,13 @@ export const GlobalProvider = ({ children }) => {
 
   async function getTransactions() {
     try {
-      const res = await axios.get("/api/v1/transactions");
+      const {
+        data: { data },
+      } = await axios.get("/api/v1/transactions");
 
       dispatch({
         type: "GET_TRANSACTIONS",
-        payload: res.data.data,
+        payload: data,
       });
     } catch (error) {
       dispatch({
@@ -123,11 +130,15 @@ export const GlobalProvider = ({ children }) => {
     };
 
     try {
-      const res = await axios.post("/api/v1/transactions", transaction, config);
+      const { data } = await axios.post(
+        "/api/v1/transactions",
+        transaction,
+        config
+      );
 
       dispatch({
         type: "ADD_TRANSACTION",
-        payload: res.data.data,
+        payload: data.data,
       });
     } catch (error) {
       dispatch({

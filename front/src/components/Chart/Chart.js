@@ -1,7 +1,8 @@
 import React, { useContext } from "react";
-import Header from "./Header";
+import Header from "../Header/Header";
 import { Line } from "react-chartjs-2";
-import { GlobalContext } from "../context/GlobalState";
+import { GlobalContext } from "../../context/GlobalState";
+import styles from "./Chart.module.css";
 
 const Chart = () => {
   const { selectedStock } = useContext(GlobalContext);
@@ -9,7 +10,7 @@ const Chart = () => {
 
   if (!selectedStock)
     data = {
-      labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+      labels: ["01", "02", "03", "04", "05", "06"],
       datasets: [
         {
           label: "Price",
@@ -36,7 +37,7 @@ const Chart = () => {
   console.log(selectedStock);
 
   return (
-    <>
+    <div className={styles.container}>
       <Header
         title={`Time series${
           selectedStock ? ` - ${selectedStock["2. name"]}` : ""
@@ -49,7 +50,7 @@ const Chart = () => {
           responsive: true,
         }}
       />
-    </>
+    </div>
   );
 };
 

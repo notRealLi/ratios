@@ -31,13 +31,15 @@ exports.getApiKey = async (req, res, next) => {
 exports.searchSymbol = async (req, res, next) => {
   try {
     const { text } = req.params;
-    const symbols = await axios.get(
+    const {
+      data: { bestMatches },
+    } = await axios.get(
       `https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${text}&apikey=W52VB1BHI4STUX4G`
     );
 
     return res.status(200).json({
       success: true,
-      data: symbols.data.bestMatches,
+      data: bestMatches,
     });
   } catch (error) {
     return res.status(500).json({
