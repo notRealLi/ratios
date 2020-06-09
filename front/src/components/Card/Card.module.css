@@ -32,5 +32,16 @@
 }
 
 .neutral {
+  color: #9fa2a0 !important;
+  border-bottom: 10px solid #fff !important;
+}
+
+.positive {
+  color: #2ecc71 !important;
+  border-bottom: 10px solid #fff !important;
+}
+
+.negative {
+  color: #c0392b !important;
   border-bottom: 10px solid #fff !important;
 }
