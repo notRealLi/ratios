@@ -14,6 +14,9 @@ const Cards = () => {
       ? styles.up
       : styles.down
     : styles.noChange;
+  const currencyAndType = selectedStock
+    ? selectedStock["8. currency"] + " / " + selectedStock["3. type"]
+    : "N/A";
   const sentiment = selectedStock ? selectedStock.sentiment.score_tag : "N/A";
 
   return (
@@ -26,18 +29,20 @@ const Cards = () => {
           {price}
         </Typography>
       </Paper>
+
+      <Paper elevation={3} className={cx(styles.card, styles.noChange)}>
+        <Typography color="textSecondary">Currency / Type:</Typography>
+        <Typography variant="h5" width="fit-content">
+          {currencyAndType}
+        </Typography>
+      </Paper>
+
       <Paper elevation={3} className={cx(styles.card, styles.neutral)}>
         <Typography color="textSecondary" noWrap>
           Sentiment:
         </Typography>
         <Typography variant="h5" width="fit-content">
           {sentiment}
-        </Typography>
-      </Paper>
-      <Paper elevation={3} className={cx(styles.card)}>
-        <Typography color="textSecondary">Price:</Typography>
-        <Typography variant="h5" width="fit-content">
-          {selectedStock ? selectedStock.y[0] : "N/A"}
         </Typography>
       </Paper>
     </div>
