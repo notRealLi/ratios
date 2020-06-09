@@ -1,18 +1,14 @@
 .container {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
   justify-content: center;
-  padding: 50px 0;
-  width: 58%;
-  max-height: 40vh;
+  width: 58% !important;
+  margin: 2% 0 !important;
 }
 
 .card {
   display: flex;
   flex-direction: column;
-  margin: 1% 2% !important;
-  min-width: 25% !important;
+  margin: 2% 2% !important;
+  min-width: 123px !important;
   min-height: 70% !important;
   padding: 2%;
   justify-content: center;

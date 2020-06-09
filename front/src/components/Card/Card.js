@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Typography, Paper } from "@material-ui/core";
+import { Typography, Paper, Grid } from "@material-ui/core";
 import { GlobalContext } from "../../context/GlobalState";
 import cx from "classnames";
 import styles from "./Card.module.css";
@@ -28,35 +28,63 @@ const Cards = () => {
     sentiment = "neutral";
   }
 
+  const xs = 12;
+  const sm = 12;
+  const md = 3;
+
   return (
-    <div className={styles.container}>
-      <Paper elevation={3} className={cx(styles.card, upOrDown)}>
+    <Grid container spacing={3} className={styles.container}>
+      <Grid
+        item
+        component={Paper}
+        elevation={3}
+        xs={xs}
+        sm={sm}
+        md={md}
+        className={cx(styles.card, upOrDown)}
+      >
         <Typography color="textSecondary" noWrap>
           Price:
         </Typography>
         <Typography variant="h5" width="fit-content">
           {price}
         </Typography>
-      </Paper>
+      </Grid>
 
-      <Paper elevation={3} className={cx(styles.card, styles.noChange)}>
+      <Grid
+        item
+        component={Paper}
+        elevation={3}
+        xs={xs}
+        sm={sm}
+        md={md}
+        className={cx(styles.card, styles.noChange)}
+      >
         <Typography color="textSecondary" noWrap>
           Currency / Type:
         </Typography>
-        <Typography variant="h5" width="fit-content">
+        <Typography variant="h6" width="fit-content" noWrap>
           {currencyAndType}
         </Typography>
-      </Paper>
+      </Grid>
 
-      <Paper elevation={3} className={cx(styles.card, styles[sentiment])}>
+      <Grid
+        item
+        component={Paper}
+        elevation={3}
+        xs={xs}
+        sm={sm}
+        md={md}
+        className={cx(styles.card, styles[sentiment])}
+      >
         <Typography color="textSecondary" noWrap>
           Sentiment:
         </Typography>
         <Typography variant="h5" width="fit-content">
           {sentiment}
         </Typography>
-      </Paper>
-    </div>
+      </Grid>
+    </Grid>
   );
 };
 
