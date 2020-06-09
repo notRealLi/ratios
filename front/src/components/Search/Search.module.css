@@ -1,7 +1,14 @@
 .container {
   display: flex;
   flex-direction: column;
-  width: 50%;
-  margin-top: 2%;
-  margin-bottom: 3%;
+  width: 48%;
+  margin-bottom: 2%;
+}
+
+/* .searchbar:hover .MuiOutlinedInput-notchedOutline {
+  border-color: "red";
+} */
+
+.Mui-focused {
+  border-color: "red";
 }

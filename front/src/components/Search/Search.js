@@ -5,9 +5,7 @@ import { GlobalContext } from "../../context/GlobalState";
 import styles from "./Search.module.css";
 
 const Search = () => {
-  const { suggestions, searchSymbol, searchDataset } = useContext(
-    GlobalContext
-  );
+  const { suggestions, searchSymbol, searchStock } = useContext(GlobalContext);
 
   const [text, setText] = useState("");
 
@@ -17,7 +15,7 @@ const Search = () => {
 
   const onChange = (event, selection) => {
     if (!selection) return;
-    searchDataset(selection.value);
+    searchStock(selection.value);
     setText("");
   };
 
@@ -30,6 +28,7 @@ const Search = () => {
   return (
     <div className={styles.container}>
       <Autocomplete
+        className={styles.searchbar}
         value={text}
         popupIcon={null}
         noOptionsText={"Type to search..."}

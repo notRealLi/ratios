@@ -52,7 +52,7 @@ export const GlobalProvider = ({ children }) => {
     }
   }
 
-  async function searchDataset(stock) {
+  async function searchStock(stock) {
     try {
       const {
         data: { data, size },
@@ -74,6 +74,9 @@ export const GlobalProvider = ({ children }) => {
         );
         payload = stock;
       }
+
+      console.log("stock");
+      console.log(payload);
 
       dispatch({
         type: "SEARCH_DATASET",
@@ -157,7 +160,7 @@ export const GlobalProvider = ({ children }) => {
         loading: state.loading,
         error: state.error,
         searchSymbol,
-        searchDataset,
+        searchStock,
         getTransactions,
         dispatch,
         deleteTransaction,

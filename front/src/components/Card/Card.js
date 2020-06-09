@@ -13,7 +13,7 @@ const Cards = () => {
     ? selectedStock.y[0] > selectedStock.y[1]
       ? styles.up
       : styles.down
-    : "";
+    : styles.noChange;
 
   return (
     <div className={styles.container}>
@@ -25,9 +25,9 @@ const Cards = () => {
           {price}
         </Typography>
       </Paper>
-      <Paper elevation={3} className={cx(styles.card)}>
+      <Paper elevation={3} className={cx(styles.card, styles.neutral)}>
         <Typography color="textSecondary" noWrap>
-          Current Price:
+          Sentiment:
         </Typography>
         <Typography variant="h5" width="fit-content">
           {selectedStock ? selectedStock.y[0] : "N/A"}
