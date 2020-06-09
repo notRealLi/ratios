@@ -22,7 +22,7 @@ const Cards = () => {
   return (
     <div className={styles.container}>
       <Paper elevation={3} className={cx(styles.card, upOrDown)}>
-        <Typography color="textSecondary" noWrap className={styles.typography}>
+        <Typography color="textSecondary" noWrap gutterbottom>
           Price:
         </Typography>
         <Typography variant="h5" width="fit-content">
@@ -31,7 +31,9 @@ const Cards = () => {
       </Paper>
 
       <Paper elevation={3} className={cx(styles.card, styles.noChange)}>
-        <Typography color="textSecondary">Currency / Type:</Typography>
+        <Typography color="textSecondary" noWrap>
+          Currency / Type:
+        </Typography>
         <Typography variant="h5" width="fit-content">
           {currencyAndType}
         </Typography>
