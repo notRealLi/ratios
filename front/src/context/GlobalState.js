@@ -74,6 +74,10 @@ export const GlobalProvider = ({ children }) => {
         payload = stock;
       }
 
+      payload = await _getSentiment(payload);
+
+      console.log(payload);
+
       dispatch({
         type: "SEARCH_STOCK",
         payload,
@@ -84,6 +88,30 @@ export const GlobalProvider = ({ children }) => {
         type: "STOCK_ERROR",
         payload: error,
       });
+    }
+  }
+
+  async function _getSentiment(stock) {
+    try {
+      const text = stock["2. name"].trim();
+      const config = {
+        params: {
+          key: "6a84b417edc5840ed05bc27993a11844",
+          lang: "en",
+          txt: text,
+        },
+      };
+
+      const { data } = await axios.post(
+        "https://api.meaningcloud.com/sentiment-2.1",
+        null,
+        config
+      );
+
+      stock.sentiment = data;
+      return stock;
+    } catch (error) {
+      return stock;
     }
   }
 

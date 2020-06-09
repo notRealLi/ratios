@@ -14,6 +14,7 @@ const Cards = () => {
       ? styles.up
       : styles.down
     : styles.noChange;
+  const sentiment = selectedStock ? selectedStock.sentiment.score_tag : "N/A";
 
   return (
     <div className={styles.container}>
@@ -30,7 +31,7 @@ const Cards = () => {
           Sentiment:
         </Typography>
         <Typography variant="h5" width="fit-content">
-          {selectedStock ? selectedStock.y[0] : "N/A"}
+          {sentiment}
         </Typography>
       </Paper>
       <Paper elevation={3} className={cx(styles.card)}>
