@@ -4,7 +4,6 @@ import axios from "axios";
 
 const initialState = {
   selectedStock: null,
-  transactions: [],
   suggestions: [],
   error: null,
   loading: true,
@@ -75,11 +74,8 @@ export const GlobalProvider = ({ children }) => {
         payload = stock;
       }
 
-      console.log("stock");
-      console.log(payload);
-
       dispatch({
-        type: "SEARCH_DATASET",
+        type: "SEARCH_STOCK",
         payload,
       });
     } catch (error) {
@@ -91,80 +87,16 @@ export const GlobalProvider = ({ children }) => {
     }
   }
 
-  async function getTransactions() {
-    try {
-      const {
-        data: { data },
-      } = await axios.get("/api/v1/transactions");
-
-      dispatch({
-        type: "GET_TRANSACTIONS",
-        payload: data,
-      });
-    } catch (error) {
-      dispatch({
-        type: "TRANSACTION_ERROR",
-        payload: error.response.data.error,
-      });
-    }
-  }
-
-  async function deleteTransaction(id) {
-    try {
-      await axios.delete(`/api/v1/transactions/${id}`);
-
-      dispatch({
-        type: "DELETE_TRANSACTION",
-        payload: id,
-      });
-    } catch (error) {
-      dispatch({
-        type: "TRANSACTION_ERROR",
-        payload: error.response.data.error,
-      });
-    }
-  }
-
-  async function addTransaction(transaction) {
-    const config = {
-      header: {
-        "Content-Type": "application/json",
-      },
-    };
-
-    try {
-      const { data } = await axios.post(
-        "/api/v1/transactions",
-        transaction,
-        config
-      );
-
-      dispatch({
-        type: "ADD_TRANSACTION",
-        payload: data.data,
-      });
-    } catch (error) {
-      dispatch({
-        type: "TRANSACTION_ERROR",
-        payload: error.response.data.error,
-      });
-    }
-  }
-
   return (
     <GlobalContext.Provider
       value={{
         selectedStock: state.selectedStock,
         suggestions: state.suggestions,
-        transactions: state.transactions,
         loading: state.loading,
         error: state.error,
         searchSymbol,
         searchStock,
-        getTransactions,
         dispatch,
-        deleteTransaction,
-        addTransaction,
       }}
     >
       {children}
