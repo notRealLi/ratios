@@ -1,0 +1,14 @@
+.side {
+  display: flex;
+  flex-direction: column;
+  /* align-items: flex-end; */
+  justify-content: flex-end;
+  /* background-color: blue; */
+  width: 30vw;
+  margin-top: 3%;
+  margin-left: 2%;
+}
+
+.card {
+  margin-bottom: 5% !important;
+}
