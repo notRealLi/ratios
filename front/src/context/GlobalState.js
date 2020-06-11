@@ -25,7 +25,6 @@ export const GlobalProvider = ({ children }) => {
       const key = keys[Math.floor(Math.random() * size)];
       let payload = [];
       text = text.trim();
-      console.log(keys);
 
       if (text !== "") {
         const { data: symbols } = await axios.get(
@@ -44,7 +43,6 @@ export const GlobalProvider = ({ children }) => {
         payload,
       });
     } catch (error) {
-      console.log(error);
       dispatch({
         type: "SYMBOL_API_ERROR",
         payload: error,
@@ -60,12 +58,8 @@ export const GlobalProvider = ({ children }) => {
       let key = keys[Math.floor(Math.random() * size)];
       let payload = null;
       const text = stock["1. symbol"].trim();
-      console.log("to search");
-      console.log(keys);
-      console.log(key);
 
       if (text !== "") {
-        console.log("searching");
         let { data } = await axios.get(
           `https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY&symbol=${text}&apikey=${key.key}`
         );
@@ -84,7 +78,6 @@ export const GlobalProvider = ({ children }) => {
         payload,
       });
     } catch (error) {
-      console.log(error);
       dispatch({
         type: "STOCK_API_ERROR",
         payload: error,
@@ -117,7 +110,6 @@ export const GlobalProvider = ({ children }) => {
   }
 
   async function searchNews(stock) {
-    console.log("looking for news");
     try {
       const text = stock["2. name"].trim();
 
@@ -141,14 +133,11 @@ export const GlobalProvider = ({ children }) => {
         }
       );
 
-      console.log(data);
-
       dispatch({
         type: "SEARCH_NEWS",
         payload: data.value,
       });
     } catch (error) {
-      console.log(error);
       dispatch({
         type: "API_ERROR",
         payload: error,

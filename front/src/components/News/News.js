@@ -7,7 +7,6 @@ const News = () => {
   const { newsList } = useContext(GlobalContext);
   let cards = [];
   if (newsList && newsList.length > 0) {
-    console.log("found news");
     cards = newsList.map((news, i) => (
       <div key={i} className={styles.card}>
         <ReactTinyLink
@@ -20,8 +19,6 @@ const News = () => {
         />
       </div>
     ));
-  } else {
-    console.log("no news");
   }
 
   return <div className={styles.side}>{cards}</div>;

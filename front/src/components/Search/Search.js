@@ -14,14 +14,12 @@ const Search = () => {
 
   const onInputChange = (event, input) => {
     if (!input || input.length < 2) return;
-    console.log("input change");
     searchSymbol(input);
   };
 
   const onChange = (event, selection) => {
     setAutoKey(!autoKey);
     if (!selection) return;
-    console.log("onchange");
     searchStock(selection.value);
     //searchNews(selection.value);
     setText("");
