@@ -11,14 +11,12 @@ export default (state, action) => {
     case "SEARCH_SYMBOL":
       return {
         ...state,
-        error: null,
         loading: false,
         suggestions: action.payload,
       };
     case "SEARCH_NEWS":
       return {
         ...state,
-        error: null,
         loading: false,
         newsList: action.payload,
       };
