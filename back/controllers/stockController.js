@@ -11,6 +11,11 @@ exports.getApiKey = async (req, res, next) => {
       { provider: "AV", key: "W52VB1BHI4STUX4G" },
       { provider: "AV", key: "SB2DUP7HDP6YVKCF" },
       { provider: "AV", key: "VCFW0GH7VDILM9PH" },
+      { provider: "AV", key: "NFOMDIFS3L6GTTPJ" },
+      { provider: "AV", key: "X9ANHAW009GOZSG8" },
+      { provider: "AV", key: "77Q7Q9GKBOH7PYP3" },
+      { provider: "AV", key: "SSPMK4X3QCR9GDMP" },
+      { provider: "AV", key: "QDJZ3LI0KHMKBKO4" },
     ];
     return res.status(200).json({
       success: true,

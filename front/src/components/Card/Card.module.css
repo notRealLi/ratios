@@ -7,9 +7,10 @@
 .card {
   display: flex;
   flex-direction: column;
+  flex-basis: 100%;
   margin: 2% 2% !important;
-  min-width: 165px !important;
-  min-height: 70% !important;
+  min-width: 130px !important;
+  /* min-height: 70% !important; */
   padding: 2%;
   justify-content: center;
   align-items: center;

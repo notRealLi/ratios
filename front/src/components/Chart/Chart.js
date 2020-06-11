@@ -34,7 +34,7 @@ const Chart = () => {
     };
   }
 
-  console.log(selectedStock);
+  if (selectedStock) console.log(selectedStock);
 
   return (
     <div className={styles.container}>

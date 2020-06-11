@@ -4,6 +4,7 @@ import axios from "axios";
 
 const initialState = {
   selectedStock: null,
+  newsList: [],
   suggestions: [],
   error: null,
   loading: true,
@@ -19,21 +20,20 @@ export const GlobalProvider = ({ children }) => {
     try {
       // fetch an api key
       const {
-        data: { data, size },
+        data: { data: keys, size },
       } = await axios.get("/api/v1/stocks/keys");
-      const key = data[Math.floor(Math.random(size))];
+      const key = keys[Math.floor(Math.random() * size)];
       let payload = [];
       text = text.trim();
+      console.log(keys);
 
       if (text !== "") {
-        const {
-          data: { bestMatches },
-        } = await axios.get(
-          `https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${text}&apikey=${key}`
+        const { data: symbols } = await axios.get(
+          `https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${text}&apikey=${key.key}`
         );
 
-        if (bestMatches)
-          payload = bestMatches.map((item) => ({
+        if (symbols.bestMatches)
+          payload = symbols.bestMatches.map((item) => ({
             value: item,
             label: item["1. symbol"],
           }));
@@ -44,8 +44,9 @@ export const GlobalProvider = ({ children }) => {
         payload,
       });
     } catch (error) {
+      console.log(error);
       dispatch({
-        type: "STOCK_ERROR",
+        type: "SYMBOL_API_ERROR",
         payload: error,
       });
     }
@@ -54,17 +55,19 @@ export const GlobalProvider = ({ children }) => {
   async function searchStock(stock) {
     try {
       const {
-        data: { data, size },
+        data: { data: keys, size },
       } = await axios.get("/api/v1/stocks/keys");
-      const key = data[Math.floor(Math.random(size))];
+      let key = keys[Math.floor(Math.random() * size)];
       let payload = null;
       const text = stock["1. symbol"].trim();
       console.log("to search");
+      console.log(keys);
+      console.log(key);
 
       if (text !== "") {
         console.log("searching");
-        const { data } = await axios.get(
-          `https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY&symbol=${text}&apikey=${key}`
+        let { data } = await axios.get(
+          `https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY&symbol=${text}&apikey=${key.key}`
         );
 
         stock.x = Object.keys(data["Weekly Time Series"]);
@@ -76,8 +79,6 @@ export const GlobalProvider = ({ children }) => {
 
       payload = await _getSentiment(payload);
 
-      console.log(payload);
-
       dispatch({
         type: "SEARCH_STOCK",
         payload,
@@ -85,7 +86,7 @@ export const GlobalProvider = ({ children }) => {
     } catch (error) {
       console.log(error);
       dispatch({
-        type: "STOCK_ERROR",
+        type: "STOCK_API_ERROR",
         payload: error,
       });
     }
@@ -115,15 +116,57 @@ export const GlobalProvider = ({ children }) => {
     }
   }
 
+  async function searchNews(stock) {
+    console.log("looking for news");
+    try {
+      const text = stock["2. name"].trim();
+
+      const { data } = await axios.get(
+        "https://contextualwebsearch-websearch-v1.p.rapidapi.com/api/Search/NewsSearchAPI",
+        {
+          headers: {
+            "content-type": "application/octet-stream",
+            "x-rapidapi-host":
+              "contextualwebsearch-websearch-v1.p.rapidapi.com",
+            "x-rapidapi-key":
+              "6a987ca92amsh30c066c51e3dae1p17be9ajsnf227502283a3",
+          },
+          params: {
+            autoCorrect: "false",
+            pageNumber: "1",
+            pageSize: "4",
+            q: text,
+            safeSearch: "false",
+          },
+        }
+      );
+
+      console.log(data);
+
+      dispatch({
+        type: "SEARCH_NEWS",
+        payload: data.value,
+      });
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: "API_ERROR",
+        payload: error,
+      });
+    }
+  }
+
   return (
     <GlobalContext.Provider
       value={{
         selectedStock: state.selectedStock,
+        newsList: state.newsList,
         suggestions: state.suggestions,
         loading: state.loading,
         error: state.error,
         searchSymbol,
         searchStock,
+        searchNews,
         dispatch,
       }}
     >

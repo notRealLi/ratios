@@ -13,7 +13,7 @@ function App() {
           <Search />
           <Chart />
         </div>
-        <News />
+        {/* <News /> */}
       </div>
     </GlobalProvider>
   );

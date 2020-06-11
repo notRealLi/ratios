@@ -4,11 +4,10 @@
   /* align-items: flex-end; */
   justify-content: flex-end;
   /* background-color: blue; */
-  width: 30vw;
-  margin-top: 3%;
+  max-width: 30vw;
   margin-left: 2%;
 }
 
 .card {
-  margin-bottom: 5% !important;
+  margin-top: 10% !important;
 }

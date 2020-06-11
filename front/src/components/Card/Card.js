@@ -14,16 +14,15 @@ const Cards = () => {
       ? styles.up
       : styles.down
     : styles.noChange;
-  const currencyAndType = selectedStock
-    ? selectedStock["8. currency"] + " / " + selectedStock["3. type"]
-    : "N/A";
-
+  const currency = selectedStock ? selectedStock["8. currency"] : "N/A";
   const scoreTag = selectedStock ? selectedStock.sentiment.score_tag : "N/A";
   let sentiment = "";
   if (scoreTag === "P" || scoreTag === "P+") {
     sentiment = "positive";
   } else if (scoreTag === "N" || scoreTag === "N+") {
     sentiment = "negative";
+  } else if (scoreTag === "N/A") {
+    sentiment = "N/A";
   } else {
     sentiment = "neutral";
   }
@@ -61,10 +60,10 @@ const Cards = () => {
         className={cx(styles.card, styles.noChange)}
       >
         <Typography color="textSecondary" noWrap>
-          Currency / Type:
+          Currency:
         </Typography>
-        <Typography variant="h6" width="fit-content" noWrap>
-          {currencyAndType}
+        <Typography variant="h5" width="fit-content" noWrap>
+          {currency}
         </Typography>
       </Grid>
 

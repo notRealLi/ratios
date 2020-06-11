@@ -1,43 +1,30 @@
 import React, { useContext } from "react";
 import { ReactTinyLink } from "react-tiny-link";
+import { GlobalContext } from "../../context/GlobalState";
 import styles from "./News.module.css";
 
 const News = () => {
-  const url = "https://www.google.com";
-  const url2 = "https://www.bing.com";
-  const url3 = "https://duckduckgo.com/";
+  const { newsList } = useContext(GlobalContext);
+  let cards = [];
+  if (newsList && newsList.length > 0) {
+    console.log("found news");
+    cards = newsList.map((news, i) => (
+      <div key={i} className={styles.card}>
+        <ReactTinyLink
+          key={i}
+          cardSize="small"
+          showGraphic={true}
+          maxLine={2}
+          minLine={1}
+          url={news.url}
+        />
+      </div>
+    ));
+  } else {
+    console.log("no news");
+  }
 
-  return (
-    <div className={styles.side}>
-      <div className={styles.card}>
-        <ReactTinyLink
-          cardSize="small"
-          showGraphic={true}
-          maxLine={2}
-          minLine={1}
-          url={url}
-        />
-      </div>
-      <div className={styles.card}>
-        <ReactTinyLink
-          cardSize="small"
-          showGraphic={true}
-          maxLine={2}
-          minLine={1}
-          url={url2}
-        />
-      </div>
-      <div className={styles.card}>
-        <ReactTinyLink
-          cardSize="small"
-          showGraphic={true}
-          maxLine={2}
-          minLine={1}
-          url={url3}
-        />
-      </div>
-    </div>
-  );
+  return <div className={styles.side}>{cards}</div>;
 };
 
 export default News;
